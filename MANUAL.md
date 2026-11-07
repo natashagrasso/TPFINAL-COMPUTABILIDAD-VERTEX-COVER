@@ -32,7 +32,7 @@ python vertex_cover.py 12
 python vertex_cover.py 15
 ```
 
-El programa genera un grafo aleatorio no dirigido con una probabilidad de `0.3` para cada arista posible y busca un recubrimiento mínimo de vértices.
+El programa genera un grafo aleatorio no dirigido con una probabilidad de `0.3` para cada arista posible y busca un recubrimiento mínimo de vértices. La semilla fija `42` hace que se genere siempre el mismo grafo para un mismo valor de `n`.
 
 La salida contiene:
 
@@ -40,7 +40,7 @@ La salida contiene:
 - **Vértices del recubrimiento:** identificadores de los vértices seleccionados.
 - **Tiempo de ejecución:** duración de la búsqueda, en segundos.
 
-Los resultados pueden cambiar entre ejecuciones porque el grafo es aleatorio. El tiempo informado corresponde a la búsqueda y no incluye la generación del grafo.
+Para un mismo valor de `n`, el grafo y el recubrimiento se repiten en cada ejecución. Si se cambia `n`, se genera otro grafo. El tiempo puede variar ligeramente entre ejecuciones y corresponde a la búsqueda; no incluye la generación del grafo.
 
 ## Activar o salir del entorno virtual
 

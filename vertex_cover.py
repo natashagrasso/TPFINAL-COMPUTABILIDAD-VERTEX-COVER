@@ -18,14 +18,13 @@ def vertex_cover_minimo(grafo: nx.Graph) -> set[int]:
     mejor_mascara = (1 << len(vertices)) - 1
     mejor_tamano = len(vertices)
 
-    # Cada entero entre 0 y 2^n - 1 representa un subconjunto distinto.
+    # Recorre las 2^n combinaciones posibles.
     for mascara in range(1 << len(vertices)):
         tamano = mascara.bit_count()
         if tamano >= mejor_tamano:
             continue
 
-        # Un subconjunto cubre el grafo si contiene al menos un extremo
-        # de cada arista.
+        # Comprueba que cada arista tenga un extremo seleccionado
         if all(
             (mascara & (1 << origen)) or (mascara & (1 << destino))
             for origen, destino in aristas
@@ -55,7 +54,8 @@ def main() -> None:
     if args.n < 0:
         parser.error("n debe ser un entero no negativo")
 
-    grafo = nx.erdos_renyi_graph(args.n, 0.3)
+    # se fija la semilla para repetir el mismo grafo en cada prueba.
+    grafo = nx.erdos_renyi_graph(args.n, 0.3, seed=42)
 
     inicio = perf_counter()
     cover = vertex_cover_minimo(grafo)
