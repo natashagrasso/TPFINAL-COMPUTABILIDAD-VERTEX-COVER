@@ -54,7 +54,7 @@ def main() -> None:
     if args.n < 0:
         parser.error("n debe ser un entero no negativo")
 
-    # se fija la semilla para repetir el mismo grafo en cada prueba.
+    # Fijar semilla para repetir experimentos.
     grafo = nx.erdos_renyi_graph(args.n, 0.3, seed=42)
 
     inicio = perf_counter()
