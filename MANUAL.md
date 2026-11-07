@@ -42,7 +42,7 @@ La salida contiene:
 
 ### Fijar semilla para repetir experimentos
 
-Fijé la semilla en `42` para que, al ejecutar el programa con el mismo valor de `n`, se genere el mismo grafo y se obtenga el mismo recubrimiento. El tiempo puede variar ligeramente y corresponde a la búsqueda; no incluye la generación del grafo.
+La semilla se fija en `42` para que, al ejecutar el programa con el mismo valor de `n`, se genere el mismo grafo y se obtenga el mismo recubrimiento. El tiempo puede variar ligeramente y corresponde a la búsqueda; no incluye la generación del grafo.
 
 ## Activar o salir del entorno virtual
 

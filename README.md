@@ -32,7 +32,11 @@ python vertex_cover.py 10
 
 El número `10` es la cantidad de vértices del grafo. También se puede reemplazar por otros valores, por ejemplo `12` o `15`.
 
-El programa informa el tamaño del recubrimiento mínimo, los vértices seleccionados y el tiempo empleado en la búsqueda. Se usa una semilla fija (`42`), por lo que para un mismo valor de `n` se genera el mismo grafo y se obtiene el mismo recubrimiento en cada ejecución.
+El programa informa el tamaño del recubrimiento mínimo, los vértices seleccionados y el tiempo empleado en la búsqueda.
+
+### Fijar semilla para repetir experimentos
+
+Se fija la semilla en `42` para que, con el mismo valor de `n`, se genere el mismo grafo y se obtenga el mismo recubrimiento en cada ejecución.
 
 Para instrucciones más detalladas, consultar el [manual de ejecución](MANUAL.md).
 
