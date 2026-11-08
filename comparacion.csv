@@ -1,0 +1,7 @@
+﻿n,aristas,semilla,probabilidad,networkx_version,python_version,plataforma,origen_exacto,estado_exacto,tamano_exacto,tamano_heuristico,alcanzo_optimo,error_relativo_porcentaje,tiempo_exacto_segundos,tiempo_heuristico_mediana_segundos,repeticiones_heuristica,heuristica_valida
+10,17,42,0.3,3.7,3.12.2,Windows-10-10.0.19045-SP0,misma ejecución,completado,6,6,sí,0.000000,0.001776100,0.000190900,5,sí
+11,22,42,0.3,3.7,3.12.2,Windows-10-10.0.19045-SP0,misma ejecución,completado,7,8,no,14.285714,0.003916800,0.000201500,5,sí
+12,24,42,0.3,3.7,3.12.2,Windows-10-10.0.19045-SP0,misma ejecución,completado,7,7,sí,0.000000,0.006622200,0.000217300,5,sí
+13,28,42,0.3,3.7,3.12.2,Windows-10-10.0.19045-SP0,misma ejecución,completado,7,7,sí,0.000000,0.012675900,0.000230700,5,sí
+14,35,42,0.3,3.7,3.12.2,Windows-10-10.0.19045-SP0,misma ejecución,completado,9,10,no,11.111111,0.048659100,0.000291300,5,sí
+15,38,42,0.3,3.7,3.12.2,Windows-10-10.0.19045-SP0,misma ejecución,completado,9,9,sí,0.000000,0.082622400,0.000298700,5,sí
