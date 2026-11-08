@@ -53,6 +53,7 @@ def medir(funcion, grafo, repeticiones):
 
 
 def main():
+    """Arma los casos, corre/lee el exacto y la heurística, y guarda el CSV."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--entrada", type=Path, help="CSV del exacto ya medido")
     parser.add_argument("--desde", type=int, default=10)
@@ -104,11 +105,15 @@ def main():
                 raise ValueError("n no puede ser negativo")
             grafo = nx.erdos_renyi_graph(n, 0.3, seed=SEMILLA)
             if args.entrada:
+                # Modo --entrada: el óptimo y su tiempo se leen del CSV del
+                # punto 3. Si ese caso no había terminado, no hay óptimo (None).
                 estado = caso["estado"].strip().casefold()
                 tiempo_exacto = caso["tiempo_segundos"]
                 optimo = (int(caso["tamano_vertex_cover"])
                           if estado == "completado" else None)
             else:
+                # Modo sin --entrada: se corre el exacto acá mismo (1 vez) para
+                # obtener el óptimo y su tiempo en este equipo.
                 cover_exacto, tiempo = medir(vertex_cover_minimo, grafo, 1)
                 optimo = len(cover_exacto)
                 tiempo_exacto = f"{tiempo:.9f}"
@@ -116,11 +121,16 @@ def main():
 
             cover, tiempo_h = medir(vertex_cover_voraz, grafo, args.repeticiones)
             tamano = len(cover)
+            # Control de coherencia: la heurística nunca puede dar un cover más
+            # chico que el óptimo exacto; si pasa, los datos no corresponden.
             if optimo is not None and tamano < optimo:
                 raise ValueError(
                     f"n={n}: la heurística es menor que el supuesto óptimo. "
                     "Revisá que los grafos y los datos de entrada coincidan."
                 )
+            # Error relativo = cuánto más grande es el cover heurístico respecto
+            # del óptimo, en %. Si no hay óptimo conocido, queda None (sin dato);
+            # si el óptimo es 0 y la heurística también, el error es 0.
             error = (100 * (tamano - optimo) / optimo if optimo else
                      (0.0 if optimo == 0 and tamano == 0 else None))
             escritor.writerow({

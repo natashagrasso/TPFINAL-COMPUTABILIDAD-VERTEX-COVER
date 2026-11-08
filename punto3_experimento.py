@@ -23,7 +23,20 @@ from pathlib import Path
 
 
 def medir_ejecucion(n: int, limite_segundos: float) -> tuple[str, str, str]:
-    """Ejecuta un caso aislado y devuelve tiempo, tamaño de solución y estado."""
+    """Ejecuta un caso aislado y devuelve (tiempo, tamaño de solución, estado).
+
+    El caso se corre en un proceso Python aparte: así se lo puede cortar por
+    tiempo (timeout) sin afectar al proceso principal, y la medición de un n no
+    arrastra memoria ni estado del anterior. El proceso hijo imprime primero un
+    marcador 'INICIO_ALGORITMO' (para separar la generación del grafo del inicio
+    real del algoritmo) y al terminar devuelve el tiempo y el tamaño como JSON.
+
+    :param n: cantidad de vértices del caso.
+    :param limite_segundos: tiempo máximo permitido antes de abortar el caso.
+    :return: tiempo (o ">limite"), tamaño del cover (o "") y estado.
+    """
+    # Programa que corre el proceso hijo: genera el grafo, marca el inicio del
+    # algoritmo y mide solo la búsqueda, devolviendo el resultado como JSON.
     codigo = (
         "import json, sys, time; "
         "import networkx as nx; "
@@ -50,6 +63,7 @@ def medir_ejecucion(n: int, limite_segundos: float) -> tuple[str, str, str]:
         proceso.kill()
         raise RuntimeError("No se pudieron capturar las salidas del proceso.")
 
+    # Espera el marcador de inicio; si no llega, el hijo falló al arrancar.
     marca_inicio = proceso.stdout.readline()
     if marca_inicio.strip() != "INICIO_ALGORITMO":
         _, error = proceso.communicate()
