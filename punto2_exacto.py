@@ -73,6 +73,6 @@ if __name__ == "__main__":
 
 
 # Ejemplos de uso desde la terminal:
-#   python vertex_cover.py 10
-#   python vertex_cover.py 12
-#   python vertex_cover.py 15
+#   python punto2_exacto.py 10
+#   python punto2_exacto.py 12
+#   python punto2_exacto.py 15

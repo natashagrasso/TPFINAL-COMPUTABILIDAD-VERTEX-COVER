@@ -1,4 +1,20 @@
-"""Grafica los tiempos del algoritmo exacto a partir de un archivo CSV."""
+"""Punto 4 del TP: análisis gráfico del algoritmo exacto.
+
+Lee el CSV de tiempos producido en el punto 3 (por defecto datos/resultados.csv)
+y genera dos gráficos de tiempo de ejecución vs. tamaño de entrada n:
+
+- Escala lineal: muestra el crecimiento abrupto del final.
+- Escala logarítmica: los puntos se alinean casi sobre una recta y se comparan
+  con la curva teórica c·2^n, lo que confirma el crecimiento exponencial.
+
+Además imprime por pantalla una tabla con el cociente tiempo(n)/tiempo(n-1),
+que en promedio ronda 2 (cada vértice extra duplica el trabajo). Los casos que
+superaron el límite de una hora se marcan con una X roja sobre la línea límite.
+
+Uso:
+    python punto4_grafico.py
+    python punto4_grafico.py --entrada datos/otro_archivo.csv
+"""
 
 import argparse
 from pathlib import Path
@@ -7,7 +23,12 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
+# Límite de tiempo del punto 3 (una hora). Se dibuja como referencia y marca
+# la altura a la que se ubican los casos que no terminaron.
 LIMITE_SEGUNDOS = 3600
+
+# Carpeta donde se guardan los gráficos generados.
+CARPETA_GRAFICOS = Path("graficos")
 COLUMNAS_REQUERIDAS = {
     "n",
     "tiempo_segundos",
@@ -145,8 +166,8 @@ def main() -> None:
     parser.add_argument(
         "--entrada",
         type=Path,
-        default=Path("resultados.csv"),
-        help="CSV de resultados (predeterminado: resultados.csv)",
+        default=Path("datos/resultados.csv"),
+        help="CSV de resultados (predeterminado: datos/resultados.csv)",
     )
     args = parser.parse_args()
 
@@ -159,19 +180,13 @@ def main() -> None:
         parser.error(str(error))
 
     imprimir_tabla(completados)
-    crear_grafico(
-        completados,
-        no_completados,
-        Path("grafico_tiempo_lineal.png"),
-        escala_log=False,
-    )
-    crear_grafico(
-        completados,
-        no_completados,
-        Path("grafico_tiempo_log.png"),
-        escala_log=True,
-    )
-    print("Graficos guardados en grafico_tiempo_lineal.png y grafico_tiempo_log.png")
+    # Asegura que exista la carpeta de salida antes de guardar los PNG.
+    CARPETA_GRAFICOS.mkdir(parents=True, exist_ok=True)
+    salida_lineal = CARPETA_GRAFICOS / "grafico_tiempo_lineal.png"
+    salida_log = CARPETA_GRAFICOS / "grafico_tiempo_log.png"
+    crear_grafico(completados, no_completados, salida_lineal, escala_log=False)
+    crear_grafico(completados, no_completados, salida_log, escala_log=True)
+    print(f"Graficos guardados en {salida_lineal} y {salida_log}")
 
 
 if __name__ == "__main__":

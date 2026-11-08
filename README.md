@@ -1,51 +1,109 @@
-# TP Final: Recubrimiento de Vértices
+# TP Final: Recubrimiento de Vértices (Minimum Vertex Cover)
 
-Este trabajo práctico implementa en Python una solución exacta al problema del **recubrimiento mínimo de vértices** (*Minimum Vertex Cover*).
+Trabajo final de **Teoría de la Computabilidad** (UADER – FCyT). Implementa y
+compara una solución **exacta** (fuerza bruta) y una **heurística** (voraz de
+máximo grado) para el problema del recubrimiento mínimo de vértices, analizando
+su tiempo de ejecución y escalabilidad.
 
-Un grafo está formado por vértices (puntos) y aristas (conexiones). Un recubrimiento de vértices es un conjunto de puntos que toca todas las conexiones: cada arista debe tener al menos uno de sus extremos seleccionado. El programa genera un grafo aleatorio y encuentra el recubrimiento válido de menor tamaño mediante fuerza bruta.
+Un grafo está formado por vértices (puntos) y aristas (conexiones). Un
+*recubrimiento de vértices* es un conjunto de puntos que toca todas las
+conexiones: cada arista debe tener al menos uno de sus extremos en el conjunto.
+El problema consiste en hallar el recubrimiento de menor tamaño posible, y es
+**NP-difícil**: no se conoce un algoritmo eficiente que lo resuelva de forma
+exacta para grafos grandes.
+
+## Estructura del proyecto
+
+```
+.
+├── punto2_exacto.py         # Punto 2: algoritmo exacto (fuerza bruta)
+├── punto3_experimento.py    # Punto 3: mide tiempos del exacto para n creciente
+├── punto4_grafico.py        # Punto 4: genera los gráficos de tiempo
+├── punto5_heuristica.py     # Punto 5: heurística voraz de máximo grado
+├── punto6_comparacion.py    # Punto 6: compara exacto vs. heurística
+├── punto7_escalabilidad.py  # Punto 7: mide la heurística para n grandes (>=1000)
+├── datos/                   # CSV generados (resultados y comparaciones)
+├── graficos/                # Imágenes generadas (gráficos de tiempo)
+├── requirements.txt         # Dependencias de Python
+├── README.md                # Este archivo
+└── MANUAL.md                # Manual de ejecución detallado
+```
+
+## Correspondencia con la consigna
+
+| Punto | Tema | Archivo(s) |
+|-------|------|------------|
+| 2 | Algoritmo exacto | `punto2_exacto.py` |
+| 3 | Experimentación del exacto | `punto3_experimento.py` → `datos/resultados.csv` |
+| 4 | Análisis gráfico | `punto4_grafico.py` → `graficos/*.png` |
+| 5 | Heurística | `punto5_heuristica.py` |
+| 6 | Comparación exacto vs. heurística | `punto6_comparacion.py` → `datos/comparacion*.csv` |
+| 7 | Escalabilidad de la heurística (n≥1000) | `punto7_escalabilidad.py` → `datos/escalabilidad.csv`, `graficos/escalabilidad_tiempo.png` |
 
 ## Requisitos
 
 - Python 3.10 o superior.
-- `networkx`, que se instala desde `requirements.txt`.
+- Las dependencias de `requirements.txt` (`networkx`, `pandas`, `matplotlib`).
 
-## Instalación y ejecución
+## Instalación
 
-Desde una terminal abierta en la carpeta del proyecto, crear y activar un entorno virtual e instalar la dependencia:
+Desde una terminal abierta en la carpeta del proyecto, crear el entorno virtual:
 
 ```bash
 python -m venv .venv
 ```
 
-En MSYS2 UCRT64, activar el entorno e instalar NetworkX:
+Activarlo (la ruta depende de la terminal):
 
 ```bash
-source .venv/Scripts/activate
+source .venv/bin/activate        # Linux, macOS y MSYS2 UCRT64
+# .venv\Scripts\activate         # Windows nativo (cmd o PowerShell)
+```
+
+Instalar las dependencias:
+
+```bash
 python -m pip install -r requirements.txt
 ```
 
-Ejecutar el programa indicando la cantidad de vértices deseada:
+## Ejecución rápida
 
 ```bash
-python vertex_cover.py 10
+# Punto 2 — resolver un grafo de 10 vértices con el algoritmo exacto
+python punto2_exacto.py 10
+
+# Punto 5 — resolver el mismo grafo con la heurística
+python punto5_heuristica.py 10
+
+# Punto 3 — experimentación de tiempos del exacto (tarda; ver MANUAL.md)
+python punto3_experimento.py --desde 10 --hasta 12 --salida datos/prueba.csv
+
+# Punto 4 — gráficos a partir del CSV de resultados
+python punto4_grafico.py
+
+# Punto 6 — comparación exacto vs. heurística
+python punto6_comparacion.py
+
+# Punto 7 — escalabilidad de la heurística para n grandes
+python punto7_escalabilidad.py
 ```
 
-El número `10` es la cantidad de vértices del grafo. También se puede reemplazar por otros valores, por ejemplo `12` o `15`.
+Las instrucciones detalladas (experimentación larga, opciones de cada script,
+reproducibilidad) están en el [manual de ejecución](MANUAL.md).
 
-El programa informa el tamaño del recubrimiento mínimo, los vértices seleccionados y el tiempo empleado en la búsqueda.
+## Reproducibilidad
 
-### Fijar semilla para repetir experimentos
-
-Se fija la semilla en `42` para que, con el mismo valor de `n`, se genere el mismo grafo y se obtenga el mismo recubrimiento en cada ejecución.
-
-Para instrucciones más detalladas, consultar el [manual de ejecución](MANUAL.md).
-
-El experimento de tiempos del algoritmo exacto se puede ejecutar con `python experimento.py`. El procedimiento y una opción de prueba acotada están explicados en el manual.
-
-## Graficos del experimento
-
-Instalá las dependencias con `python -m pip install -r requirements.txt` y ejecutá `python grafico.py`. Por defecto, lee `resultados.csv`; para indicar otro archivo, usá `python grafico.py --entrada ruta/al/archivo.csv`. El script imprime la tabla de tiempos y cocientes, y guarda `grafico_tiempo_lineal.png` y `grafico_tiempo_log.png` en la carpeta actual.
+Todos los programas generan el grafo con el modelo **Erdős–Rényi**: `n` vértices
+y cada arista posible incluida con probabilidad `0.3`. La **semilla se fija en
+42** (constante `SEMILLA` en `punto2_exacto.py`, reutilizada por los demás
+scripts), de modo que un mismo `n` produce siempre el mismo grafo. Así el
+exacto y la heurística se comparan sobre exactamente los mismos casos.
 
 ## Método y limitaciones
 
-La búsqueda de fuerza bruta prueba los subconjuntos posibles de vértices, representados mediante máscaras de bits, y verifica cuáles cubren todas las aristas. Al revisar todas las posibilidades, garantiza encontrar una solución mínima. Sin embargo, para `n` vértices hay hasta `2^n` subconjuntos, por lo que el método está destinado a grafos pequeños.
+La fuerza bruta prueba los subconjuntos posibles de vértices, representados con
+máscaras de bits, y se queda con el más chico que cubra todas las aristas. Al
+revisarlos todos garantiza el óptimo, pero para `n` vértices hay hasta `2^n`
+subconjuntos: el tiempo crece exponencialmente y solo es viable para grafos
+pequeños. La heurística renuncia a esa garantía a cambio de ser polinomial y
+escalar a grafos grandes.

@@ -1,4 +1,17 @@
-"""Mide el algoritmo exacto para tamaños de entrada crecientes."""
+"""Punto 3 del TP: experimentación con el algoritmo exacto.
+
+Mide el tiempo del algoritmo de fuerza bruta (punto2_exacto.py) para tamaños de
+entrada crecientes, empezando en n=10 y aumentando de a uno, hasta que un caso
+supere el límite de tiempo (una hora por defecto). Cada caso se corre en un
+PROCESO APARTE (subprocess) para poder cortarlo por tiempo sin afectar al resto
+y para que la medición de un n no contamine la del siguiente. Los resultados se
+van guardando en un CSV después de cada tamaño, de modo que si se interrumpe la
+corrida no se pierde lo ya medido.
+
+Uso típico:
+    python punto3_experimento.py                      # serie completa desde n=10
+    python punto3_experimento.py --desde 10 --hasta 12 --salida datos/prueba.csv
+"""
 
 import argparse
 import csv
@@ -14,7 +27,7 @@ def medir_ejecucion(n: int, limite_segundos: float) -> tuple[str, str, str]:
     codigo = (
         "import json, sys, time; "
         "import networkx as nx; "
-        "from vertex_cover import SEMILLA, vertex_cover_minimo; "
+        "from punto2_exacto import SEMILLA, vertex_cover_minimo; "
         "n = int(sys.argv[1]); "
         "grafo = nx.erdos_renyi_graph(n, 0.3, seed=SEMILLA); "
         "inicio = time.perf_counter(); "
@@ -89,8 +102,8 @@ def main() -> None:
     parser.add_argument(
         "--salida",
         type=Path,
-        default=Path("resultados_experimento.csv"),
-        help="ruta del CSV de resultados",
+        default=Path("datos/resultados_experimento.csv"),
+        help="ruta del CSV de resultados (predeterminado: datos/)",
     )
     args = parser.parse_args()
 
@@ -106,6 +119,8 @@ def main() -> None:
         parser.error(
             f"el archivo {salida} ya existe; elegí otra ruta con --salida"
         )
+    # Crea la carpeta de destino (p. ej. datos/) si todavía no existe.
+    salida.parent.mkdir(parents=True, exist_ok=True)
 
     with salida.open("w", newline="", encoding="utf-8") as archivo:
         escritor = csv.writer(archivo)

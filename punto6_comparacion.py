@@ -1,10 +1,26 @@
-"""Punto 6: compara calidad y tiempos del exacto y la heurística.
+"""Punto 6 del TP: comparación entre el algoritmo exacto y la heurística.
 
-Sin --entrada ejecuta ambos algoritmos (por defecto, n=10 a 15).
-Con --entrada reutiliza el CSV del punto 3 y solo ejecuta la heurística.
-En ese modo, los grafos se reconstruyen con p=0.3 y SEMILLA=42: comprobar
-que coincidan con la configuración y versión de NetworkX de la corrida original.
-Los tiempos importados pueden proceder de otro equipo y no demuestran speedup.
+Para cada tamaño n se arma el MISMO grafo (p=0.3, SEMILLA=42) y se comparan:
+- Calidad: ¿la heurística alcanzó el óptimo? (tamaño exacto vs. heurístico).
+- Error relativo: cuánto más grande es el cover heurístico, en porcentaje.
+- Tiempo de ejecución de cada algoritmo.
+
+El CSV de salida guarda además metadatos (aristas, semilla, versión de
+NetworkX, Python y plataforma) para que la comparación sea reproducible.
+
+Hay dos modos de uso:
+- Sin --entrada: ejecuta AMBOS algoritmos en este equipo (por defecto n=10..15).
+  Es el modo en que los tiempos son comparables, porque se miden juntos.
+- Con --entrada: reutiliza el CSV del punto 3 (tiempos del exacto ya medidos) y
+  solo corre la heurística. Sirve para cubrir n grandes que tardarían demasiado
+  en volver a medir. Advertencia: los tiempos importados pueden venir de otro
+  equipo o versión de NetworkX, así que no permiten atribuir el speedup solo al
+  algoritmo; por eso se verifica que el grafo reconstruido coincida (misma p y
+  semilla) antes de comparar.
+
+Uso:
+    python punto6_comparacion.py                               # mide ambos, n=10..15
+    python punto6_comparacion.py --entrada datos/resultados.csv --salida datos/comparacion_completa.csv
 """
 
 import argparse
@@ -17,8 +33,8 @@ from time import perf_counter
 
 import networkx as nx
 
-from heuristica import vertex_cover_voraz
-from vertex_cover import SEMILLA, vertex_cover_minimo
+from punto5_heuristica import vertex_cover_voraz
+from punto2_exacto import SEMILLA, vertex_cover_minimo
 
 
 def medir(funcion, grafo, repeticiones):
@@ -43,7 +59,9 @@ def main():
     parser.add_argument("--hasta", type=int, default=15)
     parser.add_argument("--repeticiones", type=int, default=5,
                         help="repeticiones de la heurística; se usa la mediana")
-    parser.add_argument("--salida", type=Path, default=Path("comparacion.csv"))
+    parser.add_argument("--salida", type=Path,
+                        default=Path("datos/comparacion.csv"),
+                        help="ruta del CSV de salida (predeterminado: datos/)")
     args = parser.parse_args()
     if args.desde < 0 or args.hasta < args.desde or args.repeticiones < 1:
         parser.error("Revisá el rango de n y las repeticiones (al menos 1).")
@@ -68,6 +86,8 @@ def main():
                 "error_relativo_porcentaje", "tiempo_exacto_segundos",
                 "tiempo_heuristico_mediana_segundos", "repeticiones_heuristica",
                 "heuristica_valida"]
+    # Crea la carpeta de destino (p. ej. datos/) si todavía no existe.
+    args.salida.parent.mkdir(parents=True, exist_ok=True)
     # Modo x: evita sobrescribir mediciones previas accidentalmente.
     try:
         archivo = args.salida.open("x", newline="", encoding="utf-8-sig")
