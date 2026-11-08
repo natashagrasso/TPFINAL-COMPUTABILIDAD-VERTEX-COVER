@@ -5,6 +5,8 @@ from time import perf_counter
 
 import networkx as nx
 
+SEMILLA = 42
+
 
 def vertex_cover_minimo(grafo: nx.Graph) -> set[int]:
     """Devuelve un vertex cover de tamaño mínimo probando subconjuntos."""
@@ -55,7 +57,7 @@ def main() -> None:
         parser.error("n debe ser un entero no negativo")
 
     # Fijar semilla (42) para repetir experimentos.
-    grafo = nx.erdos_renyi_graph(args.n, 0.3, seed=42)
+    grafo = nx.erdos_renyi_graph(args.n, 0.3, seed=SEMILLA)
 
     inicio = perf_counter()
     cover = vertex_cover_minimo(grafo)

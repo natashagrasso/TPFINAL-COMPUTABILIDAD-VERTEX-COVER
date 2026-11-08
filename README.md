@@ -40,6 +40,12 @@ Se fija la semilla en `42` para que, con el mismo valor de `n`, se genere el mis
 
 Para instrucciones más detalladas, consultar el [manual de ejecución](MANUAL.md).
 
+El experimento de tiempos del algoritmo exacto se puede ejecutar con `python experimento.py`. El procedimiento y una opción de prueba acotada están explicados en el manual.
+
+## Graficos del experimento
+
+Instalá las dependencias con `python -m pip install -r requirements.txt` y ejecutá `python grafico.py`. Por defecto, lee `resultados.csv`; para indicar otro archivo, usá `python grafico.py --entrada ruta/al/archivo.csv`. El script imprime la tabla de tiempos y cocientes, y guarda `grafico_tiempo_lineal.png` y `grafico_tiempo_log.png` en la carpeta actual.
+
 ## Método y limitaciones
 
 La búsqueda de fuerza bruta prueba los subconjuntos posibles de vértices, representados mediante máscaras de bits, y verifica cuáles cubren todas las aristas. Al revisar todas las posibilidades, garantiza encontrar una solución mínima. Sin embargo, para `n` vértices hay hasta `2^n` subconjuntos, por lo que el método está destinado a grafos pequeños.

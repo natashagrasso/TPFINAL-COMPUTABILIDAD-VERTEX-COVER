@@ -1,0 +1,24 @@
+n,tiempo_segundos,tamano_vertex_cover,estado
+10,0.000458,6,completado
+11,0.000875,7,completado
+12,0.001107,7,completado
+13,0.002097,7,completado
+14,0.006534,9,completado
+15,0.011813,9,completado
+16,0.028840,10,completado
+17,0.060050,11,completado
+18,0.108523,11,completado
+19,0.284375,13,completado
+20,0.515601,13,completado
+21,1.129592,14,completado
+22,2.409892,15,completado
+23,5.211725,16,completado
+24,13.204752,17,completado
+25,25.864374,17,completado
+26,51.064037,18,completado
+27,102.064740,19,completado
+28,211.627057,20,completado
+29,621.662474,22,completado
+30,1077.040290,22,completado
+31,3242.231833,23,completado
+32,>3600,,supero el limite de tiempo

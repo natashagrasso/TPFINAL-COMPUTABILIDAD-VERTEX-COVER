@@ -61,3 +61,21 @@ deactivate
 ## Consideración sobre el algoritmo
 
 La fuerza bruta examina hasta `2^n` subconjuntos. Encuentra una solución óptima, pero el tiempo de ejecución aumenta rápidamente a medida que crece la cantidad de vértices. Se recomienda usarlo con grafos pequeños.
+
+## Experimentación con el algoritmo exacto
+
+El punto 3 del trabajo pide aumentar `n` desde 10 y registrar los tiempos hasta que una ejecución supere una hora. El programa `experimento.py` automatiza las pruebas y guarda cada resultado en `resultados_experimento.csv`. Cada caso usa la misma semilla fija que el algoritmo exacto. Si un caso supera el límite de 3600 segundos, la ejecución se detiene y el CSV registra `>3600`.
+
+Antes de iniciar la experimentación larga, se puede hacer una prueba acotada:
+
+```bash
+python experimento.py --desde 10 --hasta 12 --salida prueba.csv
+```
+
+Para realizar la serie solicitada, cerrar programas que no sean necesarios y ejecutar:
+
+```bash
+python experimento.py
+```
+
+El proceso puede durar mucho tiempo: la fuerza bruta crece exponencialmente. El CSV se actualiza después de cada tamaño probado, así que los resultados parciales quedan guardados si se interrumpe la corrida. Si se repite el experimento, indicar otro nombre con `--salida`, porque el programa no sobrescribe resultados existentes. Las mediciones dependen del equipo y de la carga del sistema; anotar el hardware y procurar no ejecutar otros procesos pesados durante la prueba.
