@@ -1,0 +1,6 @@
+n,aristas,semilla,probabilidad,tamano_cover,tiempo_mediana_segundos,repeticiones,networkx_version,python_version,plataforma
+1000,149559,42,0.3,981,0.351215,3,3.7,3.13.3,Windows-11-10.0.26200-SP0
+2000,599750,42,0.3,1981,1.548140,3,3.7,3.13.3,Windows-11-10.0.26200-SP0
+3000,1349951,42,0.3,2981,3.874467,3,3.7,3.13.3,Windows-11-10.0.26200-SP0
+4000,2400390,42,0.3,3982,8.100509,3,3.7,3.13.3,Windows-11-10.0.26200-SP0
+5000,3750677,42,0.3,4984,13.713672,3,3.7,3.13.3,Windows-11-10.0.26200-SP0

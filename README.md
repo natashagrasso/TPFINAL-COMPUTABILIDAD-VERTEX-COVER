@@ -38,7 +38,11 @@ exacta para grafos grandes.
 | 4 | Análisis gráfico | `punto4_grafico.py` → `graficos/*.png` |
 | 5 | Heurística | `punto5_heuristica.py` |
 | 6 | Comparación exacto vs. heurística | `punto6_comparacion.py` → `datos/comparacion*.csv` |
-| 7 | Escalabilidad de la heurística (n≥1000) | `punto7_escalabilidad.py` → `datos/escalabilidad.csv`, `graficos/escalabilidad_tiempo.png` |
+| 7 | Escalabilidad de la heurística (n≥1000) | `punto7_escalabilidad.py` → `datos/escalabilidad_final.csv`, `graficos/escalabilidad_tiempo.png` |
+
+La corrida del punto 7 midió `n = 1000, 2000, 3000, 4000 y 5000`, con tres
+repeticiones por tamaño. Los tiempos medianos fueron de 0,351 a 13,714 segundos.
+Los resultados completos y el análisis están en [MANUAL.md](MANUAL.md).
 
 ## Requisitos
 
@@ -81,8 +85,8 @@ python punto3_experimento.py --desde 10 --hasta 12 --salida datos/prueba.csv
 # Punto 4 — gráficos a partir del CSV de resultados
 python punto4_grafico.py
 
-# Punto 6 — comparación exacto vs. heurística
-python punto6_comparacion.py
+# Punto 6 — comparar los mismos casos medidos en el punto 3
+python punto6_comparacion.py --entrada datos/resultados.csv --salida datos/comparacion_nueva.csv
 
 # Punto 7 — escalabilidad de la heurística para n grandes
 python punto7_escalabilidad.py

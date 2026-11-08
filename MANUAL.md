@@ -117,11 +117,10 @@ relativo y tiempos. Tiene dos modos:
 
 ```bash
 # Mide ambos algoritmos en este equipo (n=10..15 por defecto)
-python punto6_comparacion.py --salida datos/comparacion.csv
+python punto6_comparacion.py --salida datos/comparacion_local.csv
 
-# Reutiliza los tiempos del exacto ya medidos (punto 3) y solo corre la
-# heurística; sirve para cubrir n grandes sin volver a medir el exacto
-python punto6_comparacion.py --entrada datos/resultados.csv --salida datos/comparacion_completa.csv
+# Reutiliza los casos y tiempos del exacto medidos en el punto 3
+python punto6_comparacion.py --entrada datos/resultados.csv --salida datos/comparacion_repeticion.csv
 ```
 
 El CSV de salida incluye metadatos (aristas, semilla, versiones de NetworkX y
@@ -129,6 +128,33 @@ Python, plataforma) para que la comparación sea reproducible. Igual que el
 experimento, **no sobrescribe** un archivo existente.
 
 Opciones: `--entrada`, `--desde`, `--hasta`, `--repeticiones`, `--salida`.
+
+### Resultados obtenidos con los casos del punto 3
+
+La comparación completa se encuentra en
+[`datos/comparacion_final.csv`](datos/comparacion_final.csv). Incluye los 23
+tamaños del experimento, de `n=10` a `n=32`: el exacto terminó 22 casos, y en
+`n=32` superó el límite de una hora. En los 22 casos completados, la heurística
+alcanzó el tamaño óptimo en 11 (50 %). El error relativo promedio fue 4,10 % y
+el mayor, 14,29 % (`n=11`). La heurística produjo un recubrimiento válido en
+todos los casos, incluido `n=32`; en este último no se puede determinar si fue
+óptimo ni calcular su error porque el exacto no terminó.
+
+La mediana del tiempo heurístico estuvo entre 0,000052 y 0,000274 segundos para
+`n=10..32`. El exacto tardó 3242,23 segundos para `n=31` y superó 3600 segundos
+para `n=32`. Los tiempos exactos se reutilizaron del CSV del punto 3 y los de la
+heurística se midieron al generar la comparación. Como el CSV del punto 3 no
+registra metadatos de hardware y entorno, los tiempos sirven como referencia,
+pero no permiten afirmar un factor de aceleración controlado con precisión.
+
+Algunos casos representativos:
+
+| n | Tamaño exacto | Tamaño heurístico | ¿Alcanzó el óptimo? | Error relativo | Tiempo exacto (s) | Tiempo heurístico (s) |
+|---:|---:|---:|:---:|---:|---:|---:|
+| 10 | 6 | 6 | Sí | 0 % | 0,000458 | 0,0000521 |
+| 11 | 7 | 8 | No | 14,29 % | 0,000875 | 0,0001275 |
+| 31 | 23 | 24 | No | 4,35 % | 3242,231833 | 0,0002561 |
+| 32 | No alcanzado | 25 | Desconocido | No calculable | >3600 | 0,0002743 |
 
 ## Punto 7 — Escalabilidad de la heurística
 
@@ -151,6 +177,40 @@ Opciones: `--tamanos`, `--repeticiones`, `--probabilidad`, `--salida`.
 > **Memoria.** Con `p = 0.3` la cantidad de aristas crece como ~n²/2: por
 > ejemplo, `n = 5000` genera ~3,75 millones de aristas. Conviene subir `n` de a
 > poco y vigilar el uso de RAM; si falta memoria, reducir los tamaños.
+
+### Resultados de escalabilidad
+
+Se ejecutó la heurística para `n = 1000, 2000, 3000, 4000 y 5000`, con
+probabilidad de arista `p = 0,3`, semilla `42` y tres repeticiones por tamaño.
+La tabla muestra la mediana del tiempo de la heurística; la generación del
+grafo no está incluida.
+
+| n | Aristas | Tamaño del recubrimiento | Tiempo mediano (s) |
+|---:|---:|---:|---:|
+| 1000 | 149.559 | 981 | 0,351215 |
+| 2000 | 599.750 | 1981 | 1,548140 |
+| 3000 | 1.349.951 | 2981 | 3,874467 |
+| 4000 | 2.400.390 | 3982 | 8,100509 |
+| 5000 | 3.750.677 | 4984 | 13,713672 |
+
+El tiempo aumentó junto con el tamaño del grafo: pasó de unos 0,35 segundos
+para 1000 vértices a 13,71 segundos para 5000. La curva muestra un crecimiento
+no lineal, compatible con el costo polinomial esperado de la heurística, en
+contraste con el crecimiento exponencial del algoritmo exacto. En estos grafos
+aleatorios densos, la cantidad de aristas también crece aproximadamente como
+`n²`, por lo que la generación y el almacenamiento del grafo son relevantes.
+
+En las pruebas realizadas, la heurística pudo procesar grafos de hasta 5000
+vértices en un tiempo práctico y encontró un recubrimiento válido en cada caso.
+Esto muestra que escala mucho mejor que la fuerza bruta para estos tamaños,
+aunque no garantiza que el recubrimiento sea mínimo. La viabilidad para grafos
+más grandes también depende de la memoria disponible y de la densidad del
+grafo.
+
+Los resultados completos están en
+[`datos/escalabilidad_final.csv`](datos/escalabilidad_final.csv), y el gráfico
+correspondiente en
+[`graficos/escalabilidad_tiempo.png`](graficos/escalabilidad_tiempo.png).
 
 ## Nota sobre la complejidad
 

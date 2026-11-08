@@ -1,0 +1,24 @@
+﻿n,aristas,semilla,probabilidad,networkx_version,python_version,plataforma,origen_exacto,estado_exacto,tamano_exacto,tamano_heuristico,alcanzo_optimo,error_relativo_porcentaje,tiempo_exacto_segundos,tiempo_heuristico_mediana_segundos,repeticiones_heuristica,heuristica_valida
+10,17,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,6,6,sí,0.000000,0.000458,0.000052100,5,sí
+11,22,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,7,8,no,14.285714,0.000875,0.000127500,5,sí
+12,24,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,7,7,sí,0.000000,0.001107,0.000133300,5,sí
+13,28,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,7,7,sí,0.000000,0.002097,0.000133000,5,sí
+14,35,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,9,10,no,11.111111,0.006534,0.000075200,5,sí
+15,38,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,9,9,sí,0.000000,0.011813,0.000077000,5,sí
+16,43,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,10,10,sí,0.000000,0.028840,0.000088200,5,sí
+17,47,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,11,12,no,9.090909,0.060050,0.000095300,5,sí
+18,52,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,11,11,sí,0.000000,0.108523,0.000100200,5,sí
+19,62,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,13,13,sí,0.000000,0.284375,0.000118100,5,sí
+20,67,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,13,13,sí,0.000000,0.515601,0.000123900,5,sí
+21,73,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,14,15,no,7.142857,1.129592,0.000134800,5,sí
+22,79,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,15,15,sí,0.000000,2.409892,0.000138600,5,sí
+23,87,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,16,18,no,12.500000,5.211725,0.000155500,5,sí
+24,95,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,17,19,no,11.764706,13.204752,0.000170900,5,sí
+25,105,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,17,18,no,5.882353,25.864374,0.000183800,5,sí
+26,112,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,18,18,sí,0.000000,51.064037,0.000190100,5,sí
+27,119,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,19,19,sí,0.000000,102.064740,0.000263700,5,sí
+28,126,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,20,21,no,5.000000,211.627057,0.000230100,5,sí
+29,132,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,22,23,no,4.545455,621.662474,0.000234100,5,sí
+30,143,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,22,23,no,4.545455,1077.040290,0.000250500,5,sí
+31,151,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,completado,23,24,no,4.347826,3242.231833,0.000256100,5,sí
+32,159,42,0.3,3.7,3.13.3,Windows-11-10.0.26200-SP0,datos\resultados.csv,supero el limite de tiempo,,25,desconocido,,>3600,0.000274300,5,sí
